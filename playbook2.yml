@@ -1,0 +1,29 @@
+---
+- hosts: all
+  become: true
+
+  tasks: 
+   - name: Install Apache.
+     package: 
+       name: 
+         - "{{ apache_package_name }}"
+         - "{{ php_package_name }}"
+       state: latest
+
+   - name: start and enable Apache.   
+     service:
+       name: "{{ apache_service }}"
+       state: started
+       enabled: yes 
+
+
+   - name: Copy default html file for site. 
+     tags: httpd
+     copy: 
+       src: default_site.html
+       dest: /var/www/html/index.html
+       owner: SimoneC
+       group: SimoneC
+       mode: 0644
+
+
