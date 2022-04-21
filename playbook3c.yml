@@ -1,0 +1,39 @@
+---
+- hosts: all
+  become: true
+
+  tasks: 
+   - name: Install Apache.
+     package: 
+       name: 
+         - "{{ apache_package_name }}"
+         - "{{ php_package_name }}"
+       state: latest
+
+   - name: start and enable Apache.   
+     service:
+       name: "{{ apache_service }}"
+       state: started
+       enabled: yes 
+
+   - name: change e-mail address for admin
+     tags: httpd
+     lineinfile:
+       path: /etc/httpd/conf/httpd.conf
+       regexp: '^ServerAdmin'
+       line: ServerAdmin somebody@somewhere.com
+     when: ansible_distribution == "CentOS"
+     notify: 
+       - restart apache
+       - restart memcached
+ 
+  handlers:
+   - name: restart apache
+     service: 
+       name: httpd
+       state: restarted 
+
+   - name: restart memcached
+     service: 
+       name: memcached
+       state: restarted
