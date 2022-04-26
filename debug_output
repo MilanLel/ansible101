@@ -1,0 +1,19 @@
+[SimoneC@ctrl01 ansible101_course]$ ansible-playbook debug.yml
+
+PLAY [127.0.0.1] *****************************************************************************************************************
+
+TASK [Register the output of the 'uptime' command.] ******************************************************************************
+changed: [127.0.0.1]
+
+TASK [Print the registered output of the 'uptime' command.] **********************************************************************
+ok: [127.0.0.1] => {
+    "system_uptime.stdout": " 15:17:43 up  2:21,  1 user,  load average: 0.45, 0.14, 0.08"
+}
+
+TASK [Print a simple message if a command resulted in a change.] *****************************************************************
+ok: [127.0.0.1] => {
+    "msg": "Command resulted in a change!"
+}
+
+PLAY RECAP ***********************************************************************************************************************
+127.0.0.1                  : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   

@@ -1,0 +1,70 @@
+1st run [SimoneC@ctrl01 ansible101_course]$ ansible-playbook fail_assert.yml
+
+PLAY [127.0.0.1] *****************************************************************************************************************
+
+TASK [Fail if condition warrant a failure.] **************************************************************************************
+fatal: [127.0.0.1]: FAILED! => {"changed": false, "msg": "There was an epic failure"}
+
+PLAY RECAP ***********************************************************************************************************************
+127.0.0.1                  : ok=0    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+
+2nd run  [SimoneC@ctrl01 ansible101_course]$ ansible-playbook fail_assert.yml
+
+PLAY [127.0.0.1] *****************************************************************************************************************
+
+TASK [Fail if condition warrant a failure.] **************************************************************************************
+skipping: [127.0.0.1]
+
+TASK [Stop playbook if an assertion isn't validated.] ****************************************************************************
+fatal: [127.0.0.1]: FAILED! => {
+    "assertion": "should_fail_via_assert != true", 
+    "changed": false, 
+    "evaluated_to": false, 
+    "msg": "Assertion failed"
+}
+
+PLAY RECAP ***********************************************************************************************************************
+127.0.0.1                  : ok=0    changed=0    unreachable=0    failed=1    skipped=1    rescued=0    ignored=0   
+
+3rd rune [SimoneC@ctrl01 ansible101_course]$ ansible-playbook fail_assert.yml
+
+PLAY [127.0.0.1] *****************************************************************************************************************
+
+TASK [Fail if condition warrant a failure.] **************************************************************************************
+skipping: [127.0.0.1]
+
+TASK [Stop playbook if an assertion isn't validated.] ****************************************************************************
+fatal: [127.0.0.1]: FAILED! => {
+    "assertion": "should_fail_via_assert != true", 
+    "changed": false, 
+    "evaluated_to": false, 
+    "msg": "Assertion failed"
+}
+
+PLAY RECAP ***********************************************************************************************************************
+127.0.0.1                  : ok=0    changed=0    unreachable=0    failed=1    skipped=1    rescued=0    ignored=0   
+
+[SimoneC@ctrl01 ansible101_course]$ ansible-playbook fail_assert.yml
+
+PLAY [127.0.0.1] *****************************************************************************************************************
+
+TASK [Fail if condition warrant a failure.] **************************************************************************************
+skipping: [127.0.0.1]
+
+TASK [Stop playbook if an assertion isn't validated.] ****************************************************************************
+ok: [127.0.0.1] => {
+    "changed": false, 
+    "msg": "All assertions passed"
+}
+
+TASK [Assertions can have contain conditions.] ***********************************************************************************
+fatal: [127.0.0.1]: FAILED! => {
+    "assertion": "should_fail_via_complex_assert != true", 
+    "changed": false, 
+    "evaluated_to": false, 
+    "msg": "Assertion failed"
+}
+
+PLAY RECAP ***********************************************************************************************************************
+127.0.0.1                  : ok=1    changed=0    unreachable=0    failed=1    skipped=1    rescued=0    ignored=0   
+
